@@ -56,3 +56,41 @@ See the `screenshots/` directory for the successful pipeline screenshot.
 ## Conclusion
 
 This project demonstrates how Terraform infrastructure plans can be automatically generated, validated, and stored as GitHub Actions artifacts using a CI pipeline.
+## CI Pipeline Execution Results
+
+The GitHub Actions workflow was successfully triggered by a push to the repository.
+
+### Pipeline Validation
+
+| Step | Result |
+|---|---|
+| Checkout Repository | Passed |
+| Setup Terraform | Passed |
+| Terraform Format Check | Passed |
+| Terraform Initialization | Passed |
+| Terraform Validation | Passed |
+| Generate Terraform Plan | Passed |
+| Create Readable Plan | Passed |
+| Upload Terraform Plan Artifact | Passed |
+
+### Artifact Details
+
+**Artifact Name:** `terraform-plan-artifact`
+
+**Generated Files:**
+- `tfplan` — Terraform execution plan
+- `plan.txt` — Human-readable Terraform plan
+
+### Screenshots
+
+**1. Successful Pipeline Execution**
+
+![Pipeline Success](screenshots/01-terraform-plan-job-success.png)
+
+**2. Terraform Plan Artifact**
+
+![Terraform Plan Artifact](screenshots/02-terraform-plan-artifact.png)
+
+### Conclusion
+
+Successfully implemented an automated Terraform CI pipeline using GitHub Actions. The pipeline validates Terraform configuration, generates an execution plan, and uploads the plan as an artifact.
