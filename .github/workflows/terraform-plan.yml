@@ -1,0 +1,47 @@
+name: Terraform Plan CI
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  terraform-plan:
+    name: Terraform Plan Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: '1.14.6'
+
+      - name: Check Terraform Format
+        run: terraform fmt -check
+
+      - name: Initialize Terraform
+        run: terraform init -backend=false -input=false
+
+      - name: Validate Terraform
+        run: terraform validate -no-color
+
+      - name: Generate Terraform Plan
+        run: terraform plan -input=false -no-color -out=tfplan
+
+      - name: Create Readable Plan
+        run: terraform show -no-color tfplan > plan.txt
+
+      - name: Upload Terraform Plan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan-artifact
+          path: |
+            tfplan
+            plan.txt
+          if-no-files-found: error
+          retention-days: 3
